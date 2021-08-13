@@ -1,15 +1,15 @@
 import React from 'react';
+import { ThemeProvider } from '@material-ui/core/styles';
 import ReactDOM from 'react-dom';
 
+import theme from './constants/theme';
 import App from './App';
-
-import './test.scss'
-
-console.log('hello world ts again');
 
 ReactDOM.render(
     <React.StrictMode>
-        <App />
+        <ThemeProvider theme={theme}>
+            <App />
+        </ThemeProvider>
     </React.StrictMode>,
     document.getElementById('root')
 );
