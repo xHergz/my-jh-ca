@@ -3,6 +3,7 @@ import { Theme } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import AppBar from './components/header/AppBar';
 import NavBar from './components/header/NavBar';
+import NavDrawer from './components/header/NavDrawer';
 
 const useStyles = makeStyles<Theme>((theme) => ({
     appContainer: {
@@ -41,11 +42,17 @@ const useStyles = makeStyles<Theme>((theme) => ({
 function App() {
     const styles = useStyles();
     return (
-        <div className={styles.appContainer}>
-            <NavBar className={styles.navBar} />
-            <div className={styles.content} />
-            <AppBar className={styles.appBar} />
-        </div>
+        <>
+            <div className={styles.appContainer}>
+                <NavBar className={styles.navBar} />
+                <div className={styles.content} />
+                <AppBar className={styles.appBar} />
+            </div>
+            <NavDrawer
+                open
+                onClose={(): void => {}}
+            />
+        </>
     );
 }
 

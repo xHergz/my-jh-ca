@@ -9,9 +9,10 @@ import { useCallback, useState } from 'react';
 export default function useToggle(initiallyVisible: boolean): [boolean, () => void] {
   const [visible, setVisible] = useState<boolean>(initiallyVisible);
 
-  const toggle = useCallback((): void => {
+  const toggle = (): void => {
+    console.log(visible);
     return setVisible(!visible);
-  }, [setVisible]);
+  };
 
   return [visible, toggle];
 }
