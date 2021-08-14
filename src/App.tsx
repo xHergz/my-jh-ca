@@ -48,10 +48,6 @@ function App() {
                 <div className={styles.content} />
                 <AppBar className={styles.appBar} />
             </div>
-            <NavDrawer
-                open
-                onClose={(): void => {}}
-            />
         </>
     );
 }

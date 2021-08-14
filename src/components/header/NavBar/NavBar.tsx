@@ -8,9 +8,6 @@ const NavBar: React.FunctionComponent<NavBarProps> = (props: NavBarProps): JSX.E
   return (
     <AppBar position="static">
       <Toolbar>
-        <IconButton edge="start" color="inherit" aria-label="menu">
-          <MenuIcon />
-        </IconButton>
         <Typography variant="h6">
           News
         </Typography>

@@ -1,51 +1,47 @@
 import React from 'react';
-import { Collapse, Drawer, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
-import AppsIcon from '@material-ui/icons/Apps';
-import ToolsIcon from '@material-ui/icons/Gavel';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import NotesIcon from '@material-ui/icons/Description';
+import { Drawer, List } from '@material-ui/core';
 import { withStyles } from '@material-ui/styles';
 
+import { MOBILE_NAVIGATION, NavigationGroup, NavigationId, NavigationLink } from '../../../constants/navigation';
+import { useDefaultProps, useRadio } from '../../../utils/hooks';
 import CloseButton from '../../buttons/CloseButton';
-import { useToggle, useVisibility } from '../../../utils/hooks';
+import NavDrawerLink from './NavDrawerLink';
+import NavDrawerGroup from './NavDrawerGroup';
 
 export type NavDrawerProps = {
     open: boolean;
     onClose: () => void;
+    currentCollapse?: NavigationId;
 };
 
 const NavDrawer: React.FunctionComponent<NavDrawerProps> = (props: NavDrawerProps): JSX.Element => {
-    const [appsOpen, toggleApps] = useToggle(false);
-    const [toolsOpen, openTools, closeTools] = useVisibility(false);
+    props = useDefaultProps(props, {currentCollapse: undefined});
+    const [currentCollapse, setCurrentCollapse] = useRadio(props.currentCollapse);
 
     return (
         <StyledDrawer open={props.open} onClose={props.onClose}>
             <CloseButton onClick={props.onClose} />
             <List component="nav">
-                <ListItem button onClick={toggleApps}>
-                    <ListItemIcon>
-                        <AppsIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Apps" />
-                    {appsOpen ? <ExpandLess /> : <ExpandMore />}
-                </ListItem>
-                <Collapse in={appsOpen} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                        <ListItem button>
-                            <ListItemIcon>
-                                <NotesIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Notes" />
-                        </ListItem>
-                    </List>
-                </Collapse>
-                <ListItem button>
-                    <ListItemIcon>
-                        <ToolsIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Tools" />
-                </ListItem>
+                {
+                    MOBILE_NAVIGATION.map(navItem => {
+                        if (navItem.type === 'link') {
+                            return (
+                                <NavDrawerLink
+                                    navLink={navItem as NavigationLink}
+                                />
+                            )
+                        }
+
+                        const group = navItem as NavigationGroup;
+                        return (
+                            <NavDrawerGroup
+                                navGroup={group}
+                                open={currentCollapse === group.id}
+                                onClick={setCurrentCollapse}
+                            />
+                        )
+                    })
+                }
             </List>
         </StyledDrawer>
     );
