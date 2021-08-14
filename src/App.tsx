@@ -1,6 +1,8 @@
 import React from 'react';
 import { Theme } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
+import AppBar from './components/header/AppBar';
+import NavBar from './components/header/NavBar';
 
 const useStyles = makeStyles<Theme>((theme) => ({
     appContainer: {
@@ -22,8 +24,7 @@ const useStyles = makeStyles<Theme>((theme) => ({
         }
     },
     navBar: {
-        gridArea: 'navBar',
-        backgroundColor: '#000'
+        gridArea: 'navBar'
     },
     content: {
         gridArea: 'content'
@@ -38,9 +39,9 @@ function App() {
     const styles = useStyles();
     return (
         <div className={styles.appContainer}>
-            <div className={styles.navBar} />
+            <NavBar className={styles.navBar} />
             <div className={styles.content} />
-            <div className={styles.appBar} />
+            <AppBar className={styles.appBar} />
         </div>
     );
 }
