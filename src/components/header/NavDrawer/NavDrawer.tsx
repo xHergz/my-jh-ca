@@ -1,8 +1,11 @@
 import React from 'react';
-import { Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import { Collapse, Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import AppsIcon from '@material-ui/icons/Apps';
 import CloseIcon from '@material-ui/icons/Close';
 import ToolsIcon from '@material-ui/icons/Gavel';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import NotesIcon from '@material-ui/icons/Description'
 
 import { useVisibility } from '../../../utils/hooks';
 
@@ -28,30 +31,24 @@ const NavDrawer: React.FunctionComponent<NavDrawerProps> = (props: NavDrawerProp
             <AppsIcon />
           </ListItemIcon>
           <ListItemText primary="Apps" />
+          {appsOpen ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
+        <Collapse in={appsOpen} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <ListItem button>
+              <ListItemIcon>
+                <NotesIcon />
+              </ListItemIcon>
+              <ListItemText primary="Notes" />
+            </ListItem>
+          </List>
+        </Collapse>
         <ListItem button>
           <ListItemIcon>
             <ToolsIcon />
           </ListItemIcon>
           <ListItemText primary="Tools" />
         </ListItem>
-        <ListItem button onClick={handleClick}>
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText primary="Inbox" />
-          {open ? <ExpandLess /> : <ExpandMore />}
-        </ListItem>
-        <Collapse in={open} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItem button className={classes.nested}>
-              <ListItemIcon>
-                <StarBorder />
-              </ListItemIcon>
-              <ListItemText primary="Starred" />
-            </ListItem>
-          </List>
-        </Collapse>
       </List>
     </Drawer>
   );

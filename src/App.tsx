@@ -8,7 +8,7 @@ const useStyles = makeStyles<Theme>((theme) => ({
     appContainer: {
         minHeight: '100vh',
         display: 'grid',
-        gridTemplateRows: '60px 1fr 0fr',
+        gridTemplateRows: '60px 1fr 0px',
         gridTemplateAreas:`
             "navBar"
             "content"
@@ -31,7 +31,10 @@ const useStyles = makeStyles<Theme>((theme) => ({
     },
     appBar: {
         gridArea: 'appBar',
-        backgroundColor: 'red'
+        display: 'none',
+        [theme.breakpoints.down('md')]: {
+            display: 'grid'
+        },
     }
 }));
 
