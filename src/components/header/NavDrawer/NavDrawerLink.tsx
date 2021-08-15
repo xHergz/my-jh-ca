@@ -1,7 +1,7 @@
 import React from 'react';
-import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 
 import { NavigationLink } from '../../../constants/navigation';
+import NavDrawerItem from './NavDrawerItem';
 
 export type NavDrawerLinkProps = {
     navLink: NavigationLink
@@ -9,12 +9,7 @@ export type NavDrawerLinkProps = {
 
 const NavDrawerLink: React.FunctionComponent<NavDrawerLinkProps> = (props: NavDrawerLinkProps): JSX.Element => {
     return (
-        <ListItem button>
-            <ListItemIcon>
-                {props.navLink.icon}
-            </ListItemIcon>
-            <ListItemText primary={props.navLink.text} />
-        </ListItem>
+        <NavDrawerItem navItem={props.navLink} />
     );
 }
 

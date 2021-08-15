@@ -1,33 +1,48 @@
-import React from 'react';
-import { AppBar, IconButton, Paper, Toolbar, Typography } from '@material-ui/core';
-import AppsIcon from '@material-ui/icons/Apps';
-import ToolsIcon from '@material-ui/icons/Gavel';
-import HomeIcon from '@material-ui/icons/Home';
-import MoreIcon from '@material-ui/icons/MoreHoriz';
-import SettingsIcon from '@material-ui/icons/Settings';
+import React, { useState } from 'react';
+import { AppBar, Toolbar } from '@material-ui/core';
 import { withStyles } from '@material-ui/styles';
-import NavDrawer from '../NavDrawer';
+
 import { useToggle } from '../../../utils/hooks';
-import ToolbarButton from '../../buttons/ToolbarButton';
+import { MOBILE_NAVIGATION, NavigationGroupId } from '../../../constants/navigation';
+import NavDrawer from '../NavDrawer';
+import AppBarButton from './AppBarButton';
 
 export type AppBarProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & {}
 
 const CustomAppBar: React.FunctionComponent<AppBarProps> = (props: AppBarProps): JSX.Element => {
     const [drawerOpen, toggleDrawer] = useToggle(false);
+    const [currentDrawerOption, setCurrentDrawerOption] = useState<NavigationGroupId | null>(null);
+
+    const openDrawer = (id: NavigationGroupId | null): void => {
+        setCurrentDrawerOption(id);
+        toggleDrawer();
+    };
+
     return (
         <>
             <AppBar position="relative" color="primary" className={props.className}>
-            <StyledToolbar>
-                <ToolbarButton icon={<HomeIcon />} text='Home' onClick={toggleDrawer} />
-                <ToolbarButton icon={<AppsIcon />} text='Apps' onClick={toggleDrawer} />
-                <ToolbarButton icon={<ToolsIcon />} text='Tools' onClick={toggleDrawer} />
-                <ToolbarButton icon={<SettingsIcon />} text='Settings' onClick={toggleDrawer} />
-                <ToolbarButton icon={<MoreIcon />} text='More' onClick={toggleDrawer} />
-            </StyledToolbar>
+                <StyledToolbar>
+                    {
+                        MOBILE_NAVIGATION.map(navItem => {
+                            return (
+                                <AppBarButton
+                                    key={navItem.id}
+                                    icon={navItem.icon}
+                                    text={navItem.text}
+                                    onClick={openDrawer}
+                                    id={navItem.type === 'group' ? navItem.id : undefined}
+                                />
+                            );
+                        })
+                    }
+                </StyledToolbar>
             </AppBar>
             <NavDrawer
                 open={drawerOpen}
                 onClose={toggleDrawer}
+                onOpen={toggleDrawer}
+                onCollapseChange={setCurrentDrawerOption}
+                currentCollapse={currentDrawerOption}
             />
         </>
     );

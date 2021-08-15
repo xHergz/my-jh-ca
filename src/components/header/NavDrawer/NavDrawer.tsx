@@ -1,9 +1,8 @@
 import React from 'react';
-import { Drawer, List } from '@material-ui/core';
+import { SwipeableDrawer, List } from '@material-ui/core';
 import { withStyles } from '@material-ui/styles';
 
-import { MOBILE_NAVIGATION, NavigationGroup, NavigationId, NavigationLink } from '../../../constants/navigation';
-import { useDefaultProps, useRadio } from '../../../utils/hooks';
+import { MOBILE_NAVIGATION, NavigationGroup, NavigationGroupId, NavigationLink, NavigationLinkId } from '../../../constants/navigation';
 import CloseButton from '../../buttons/CloseButton';
 import NavDrawerLink from './NavDrawerLink';
 import NavDrawerGroup from './NavDrawerGroup';
@@ -11,15 +10,14 @@ import NavDrawerGroup from './NavDrawerGroup';
 export type NavDrawerProps = {
     open: boolean;
     onClose: () => void;
-    currentCollapse?: NavigationId;
+    onOpen: () => void;
+    onCollapseChange: (id: NavigationGroupId | null) => void;
+    currentCollapse: NavigationGroupId | null;
 };
 
 const NavDrawer: React.FunctionComponent<NavDrawerProps> = (props: NavDrawerProps): JSX.Element => {
-    props = useDefaultProps(props, {currentCollapse: undefined});
-    const [currentCollapse, setCurrentCollapse] = useRadio(props.currentCollapse);
-
     return (
-        <StyledDrawer open={props.open} onClose={props.onClose}>
+        <StyledDrawer open={props.open} onClose={props.onClose} onOpen={props.onOpen}>
             <CloseButton onClick={props.onClose} />
             <List component="nav">
                 {
@@ -27,6 +25,7 @@ const NavDrawer: React.FunctionComponent<NavDrawerProps> = (props: NavDrawerProp
                         if (navItem.type === 'link') {
                             return (
                                 <NavDrawerLink
+                                    key={navItem.id}
                                     navLink={navItem as NavigationLink}
                                 />
                             )
@@ -35,9 +34,10 @@ const NavDrawer: React.FunctionComponent<NavDrawerProps> = (props: NavDrawerProp
                         const group = navItem as NavigationGroup;
                         return (
                             <NavDrawerGroup
+                                key={navItem.id}
                                 navGroup={group}
-                                open={currentCollapse === group.id}
-                                onClick={setCurrentCollapse}
+                                open={props.currentCollapse === group.id}
+                                onClick={props.onCollapseChange}
                             />
                         )
                     })
@@ -52,6 +52,6 @@ export const StyledDrawer = withStyles({
         padding: '8px',
         width: '75vw'
     }
-})(Drawer);
+})(SwipeableDrawer);
 
 export default NavDrawer;

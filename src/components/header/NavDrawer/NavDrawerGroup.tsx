@@ -1,8 +1,9 @@
 import React from 'react';
-import { Collapse, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import { Collapse } from '@material-ui/core';
 import { ExpandLess, ExpandMore} from '@material-ui/icons';
 
 import { NavigationGroup, NavigationId } from '../../../constants/navigation';
+import NavDrawerItem from './NavDrawerItem';
 import NavDrawerLink from './NavDrawerLink';
 
 export type NavDrawerGroupProps = {
@@ -21,18 +22,15 @@ const NavDrawerGroup: React.FunctionComponent<NavDrawerGroupProps> = (props: Nav
 
     return (
         <>
-            <ListItem button onClick={toggleGroup}>
-                <ListItemIcon>
-                    {props.navGroup.icon}
-                </ListItemIcon>
-                <ListItemText primary={props.navGroup.text} />
+            <NavDrawerItem navItem={props.navGroup} onClick={toggleGroup}>
                 {props.open ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
+            </NavDrawerItem>
             <Collapse in={props.open} timeout="auto" unmountOnExit>
                 {
                     props.navGroup.children.map(child => {
                         return (
                             <NavDrawerLink
+                                key={child.id}
                                 navLink={child}
                             />
                         )

@@ -7,13 +7,18 @@ import HomeIcon from '@material-ui/icons/Home';
 import MoreIcon from '@material-ui/icons/MoreHoriz';
 import SettingsIcon from '@material-ui/icons/Settings';
 
-export type NavigationId = 'apps' | 'tools' | 'settings' | 'more';
+export type NavigationLinkId = 'home' | 'contacts' | 'notes';
+
+export type NavigationGroupId = 'apps' | 'tools' | 'settings' | 'more';
+
+export type NavigationId = NavigationLinkId | NavigationGroupId;
 
 type NavigationType = 'link' | 'group';
 
 type NavigationContext = 'desktop' | 'mobile';
 
-type NavigationItem = {
+export type NavigationItem = {
+    id: NavigationId,
     icon: JSX.Element;
     text: string;
     contexts: NavigationContext[];
@@ -25,12 +30,12 @@ export type NavigationLink = NavigationItem & {
 }
 
 export type NavigationGroup = NavigationItem & {
-    id: NavigationId,
     children: NavigationLink[]
 }
 
 const NAVIGATION_TREE: (NavigationLink | NavigationGroup)[] = [
     {
+        id: 'home',
         icon: <HomeIcon />,
         text: 'Home',
         contexts: ['mobile'],
@@ -45,6 +50,7 @@ const NAVIGATION_TREE: (NavigationLink | NavigationGroup)[] = [
         type: 'group',
         children: [
             {
+                id: 'contacts',
                 icon: <ContactsIcon />,
                 text: 'Contacts',
                 contexts: ['desktop', 'mobile'],
@@ -52,6 +58,7 @@ const NAVIGATION_TREE: (NavigationLink | NavigationGroup)[] = [
                 link: '/contacts',
             },
             {
+                id: 'notes',
                 icon: <NotesIcon />,
                 text: 'Notes',
                 contexts: ['desktop', 'mobile'],
