@@ -9,8 +9,7 @@ import {
     NavigationGroupItem,
     NavigationLinkItem,
 } from '../../../constants/navigation';
-import NavigationGroup from '../Navigation/NavigationGroup';
-import NavigationLink from '../Navigation/NavigationLink';
+import { NavigationGroup, NavigationLink } from '../Navigation';
 import NavBarGroup from './NavBarGroup';
 
 export type NavBarProps = React.HTMLAttributes<HTMLDivElement> & {};
@@ -29,7 +28,7 @@ const NavBar: React.FunctionComponent<NavBarProps> = (props: NavBarProps): JSX.E
                             return <NavigationLink key={navItem.id} navLink={navItem as NavigationLinkItem} />;
                         } else if (navItem.id === 'more') {
                             return (
-                                <StyledNavigationGroup
+                                <NavBarGroup
                                     key={navItem.id}
                                     navGroup={{
                                         ...(navItem as NavigationGroupItem),

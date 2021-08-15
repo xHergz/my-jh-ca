@@ -2,9 +2,14 @@ import React from 'react';
 import { SwipeableDrawer, List } from '@material-ui/core';
 import { withStyles } from '@material-ui/styles';
 
-import { MOBILE_NAVIGATION, NavigationGroupItem, NavigationGroupId, NavigationLinkItem, NavigationLinkId } from '../../../constants/navigation';
+import {
+    MOBILE_NAVIGATION,
+    NavigationGroupItem,
+    NavigationGroupId,
+    NavigationLinkItem,
+} from '../../../constants/navigation';
 import CloseButton from '../../buttons/CloseButton';
-import NavDrawerLink from './NavDrawerLink';
+import { NavigationLink } from '../Navigation';
 import NavDrawerGroup from './NavDrawerGroup';
 
 export type NavDrawerProps = {
@@ -19,39 +24,27 @@ const NavDrawer: React.FunctionComponent<NavDrawerProps> = (props: NavDrawerProp
     return (
         <StyledDrawer open={props.open} onClose={props.onClose} onOpen={props.onOpen}>
             <CloseButton onClick={props.onClose} />
-            <List component="nav">
-                {
-                    MOBILE_NAVIGATION.map(navItem => {
-                        if (navItem.type === 'link') {
-                            return (
-                                <NavDrawerLink
-                                    key={navItem.id}
-                                    navLink={navItem as NavigationLinkItem}
-                                />
-                            );
-                        } else if (navItem.id === 'more') {
-                            const more = navItem as NavigationGroupItem;
-                            return more.children.map(child => {
-                                return (
-                                    <NavDrawerLink
-                                        key={child.id}
-                                        navLink={child}
-                                    />
-                                );
-                            });
-                        }
+            <List component='nav'>
+                {MOBILE_NAVIGATION.map((navItem) => {
+                    if (navItem.type === 'link') {
+                        return <NavigationLink key={navItem.id} navLink={navItem as NavigationLinkItem} />;
+                    } else if (navItem.id === 'more') {
+                        const more = navItem as NavigationGroupItem;
+                        return more.children.map((child) => {
+                            return <NavigationLink key={child.id} navLink={child} />;
+                        });
+                    }
 
-                        const group = navItem as NavigationGroupItem;
-                        return (
-                            <NavDrawerGroup
-                                key={navItem.id}
-                                navGroup={group}
-                                open={props.currentCollapse === group.id}
-                                onClick={props.onCollapseChange}
-                            />
-                        )
-                    })
-                }
+                    const group = navItem as NavigationGroupItem;
+                    return (
+                        <NavDrawerGroup
+                            key={navItem.id}
+                            navGroup={group}
+                            open={props.currentCollapse === group.id}
+                            onClick={props.onCollapseChange}
+                        />
+                    );
+                })}
             </List>
         </StyledDrawer>
     );
@@ -60,8 +53,8 @@ const NavDrawer: React.FunctionComponent<NavDrawerProps> = (props: NavDrawerProp
 export const StyledDrawer = withStyles({
     paper: {
         padding: '8px',
-        width: '75vw'
-    }
+        width: '75vw',
+    },
 })(SwipeableDrawer);
 
 export default NavDrawer;

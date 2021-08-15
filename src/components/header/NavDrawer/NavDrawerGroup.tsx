@@ -1,44 +1,20 @@
 import React from 'react';
 import { Collapse } from '@material-ui/core';
-import { ExpandLess, ExpandMore} from '@material-ui/icons';
 
-import { NavigationGroupItem, NavigationId } from '../../../constants/navigation';
-import NavDrawerItem from './NavDrawerItem';
-import NavDrawerLink from './NavDrawerLink';
+import { NavigationGroup, NavigationGroupProps, NavigationLink } from '../Navigation';
 
-export type NavDrawerGroupProps = {
-    navGroup: NavigationGroupItem;
-    open: boolean;
-    onClick: (id: NavigationId | null) => void;
-}
+export type NavDrawerGroupProps = NavigationGroupProps & {};
 
 const NavDrawerGroup: React.FunctionComponent<NavDrawerGroupProps> = (props: NavDrawerGroupProps): JSX.Element => {
-    const toggleGroup = (): void => {
-        if (props.open) {
-            return props.onClick(null);
-        }
-        return props.onClick(props.navGroup.id);
-    };
-
     return (
-        <>
-            <NavDrawerItem navItem={props.navGroup} onClick={toggleGroup}>
-                {props.open ? <ExpandLess /> : <ExpandMore />}
-            </NavDrawerItem>
-            <Collapse in={props.open} timeout="auto" unmountOnExit>
-                {
-                    props.navGroup.children.map(child => {
-                        return (
-                            <NavDrawerLink
-                                key={child.id}
-                                navLink={child}
-                            />
-                        )
-                    })
-                }
+        <NavigationGroup key={props.navGroup.id} navGroup={props.navGroup} open={props.open} onClick={props.onClick}>
+            <Collapse in={props.open} timeout='auto' unmountOnExit>
+                {props.navGroup.children.map((child) => {
+                    return <NavigationLink key={child.id} navLink={child} />;
+                })}
             </Collapse>
-        </>
+        </NavigationGroup>
     );
-}
+};
 
 export default NavDrawerGroup;
