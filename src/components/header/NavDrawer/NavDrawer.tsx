@@ -2,7 +2,7 @@ import React from 'react';
 import { SwipeableDrawer, List } from '@material-ui/core';
 import { withStyles } from '@material-ui/styles';
 
-import { MOBILE_NAVIGATION, NavigationGroup, NavigationGroupId, NavigationLink, NavigationLinkId } from '../../../constants/navigation';
+import { MOBILE_NAVIGATION, NavigationGroupItem, NavigationGroupId, NavigationLinkItem, NavigationLinkId } from '../../../constants/navigation';
 import CloseButton from '../../buttons/CloseButton';
 import NavDrawerLink from './NavDrawerLink';
 import NavDrawerGroup from './NavDrawerGroup';
@@ -26,11 +26,11 @@ const NavDrawer: React.FunctionComponent<NavDrawerProps> = (props: NavDrawerProp
                             return (
                                 <NavDrawerLink
                                     key={navItem.id}
-                                    navLink={navItem as NavigationLink}
+                                    navLink={navItem as NavigationLinkItem}
                                 />
                             );
                         } else if (navItem.id === 'more') {
-                            const more = navItem as NavigationGroup;
+                            const more = navItem as NavigationGroupItem;
                             return more.children.map(child => {
                                 return (
                                     <NavDrawerLink
@@ -41,7 +41,7 @@ const NavDrawer: React.FunctionComponent<NavDrawerProps> = (props: NavDrawerProp
                             });
                         }
 
-                        const group = navItem as NavigationGroup;
+                        const group = navItem as NavigationGroupItem;
                         return (
                             <NavDrawerGroup
                                 key={navItem.id}

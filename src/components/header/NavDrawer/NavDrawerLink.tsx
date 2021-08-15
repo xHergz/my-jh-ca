@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { NavigationLink } from '../../../constants/navigation';
+import { NavigationLinkItem } from '../../../constants/navigation';
 import NavDrawerItem from './NavDrawerItem';
 
 export type NavDrawerLinkProps = {
-    navLink: NavigationLink
+    navLink: NavigationLinkItem
 }
 
 const NavDrawerLink: React.FunctionComponent<NavDrawerLinkProps> = (props: NavDrawerLinkProps): JSX.Element => {

@@ -2,12 +2,12 @@ import React from 'react';
 import { Collapse } from '@material-ui/core';
 import { ExpandLess, ExpandMore} from '@material-ui/icons';
 
-import { NavigationGroup, NavigationId } from '../../../constants/navigation';
+import { NavigationGroupItem, NavigationId } from '../../../constants/navigation';
 import NavDrawerItem from './NavDrawerItem';
 import NavDrawerLink from './NavDrawerLink';
 
 export type NavDrawerGroupProps = {
-    navGroup: NavigationGroup;
+    navGroup: NavigationGroupItem;
     open: boolean;
     onClick: (id: NavigationId | null) => void;
 }

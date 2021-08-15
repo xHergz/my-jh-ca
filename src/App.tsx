@@ -9,34 +9,36 @@ const useStyles = makeStyles<Theme>((theme) => ({
     appContainer: {
         minHeight: '100vh',
         display: 'grid',
-        gridTemplateRows: '60px 1fr 0px',
-        gridTemplateAreas:`
+        gridTemplateRows: '60px 1fr 60px',
+        gridTemplateAreas: `
             "navBar"
             "content"
             "appBar"
         `,
-        [theme.breakpoints.down('md')]: {
-            gridTemplateRows: '60px 1fr 60px',
-            gridTemplateAreas:`
-            "navBar"
-            "content"
-            "appBar"
-        `,
-        }
+        [theme.breakpoints.up('md')]: {
+            gridTemplateRows: '60px 1fr 0px',
+            gridTemplateAreas: `
+                "navBar"
+                "content"
+                "appBar"
+            `,
+        },
     },
     navBar: {
-        gridArea: 'navBar'
+        gridArea: 'navBar',
+        backgroundColor: theme.palette.background.default,
     },
     content: {
-        gridArea: 'content'
+        gridArea: 'content',
     },
     appBar: {
         gridArea: 'appBar',
-        display: 'none',
-        [theme.breakpoints.down('md')]: {
-            display: 'grid'
+        display: 'grid',
+        backgroundColor: theme.palette.background.default,
+        [theme.breakpoints.up('md')]: {
+            display: 'none',
         },
-    }
+    },
 }));
 
 function App() {

@@ -7,7 +7,7 @@ import { MOBILE_NAVIGATION, NavigationGroupId } from '../../../constants/navigat
 import NavDrawer from '../NavDrawer';
 import AppBarButton from './AppBarButton';
 
-export type AppBarProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & {}
+export type AppBarProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & {};
 
 const CustomAppBar: React.FunctionComponent<AppBarProps> = (props: AppBarProps): JSX.Element => {
     const [drawerOpen, toggleDrawer] = useToggle(false);
@@ -20,21 +20,19 @@ const CustomAppBar: React.FunctionComponent<AppBarProps> = (props: AppBarProps):
 
     return (
         <>
-            <AppBar position="relative" color="primary" className={props.className}>
+            <AppBar position='relative' className={props.className}>
                 <StyledToolbar>
-                    {
-                        MOBILE_NAVIGATION.map(navItem => {
-                            return (
-                                <AppBarButton
-                                    key={navItem.id}
-                                    icon={navItem.icon}
-                                    text={navItem.text}
-                                    onClick={openDrawer}
-                                    id={navItem.type === 'group' ? navItem.id : undefined}
-                                />
-                            );
-                        })
-                    }
+                    {MOBILE_NAVIGATION.map((navItem) => {
+                        return (
+                            <AppBarButton
+                                key={navItem.id}
+                                icon={navItem.icon}
+                                text={navItem.text}
+                                onClick={openDrawer}
+                                id={navItem.type === 'group' ? navItem.id : undefined}
+                            />
+                        );
+                    })}
                 </StyledToolbar>
             </AppBar>
             <NavDrawer
@@ -46,13 +44,13 @@ const CustomAppBar: React.FunctionComponent<AppBarProps> = (props: AppBarProps):
             />
         </>
     );
-}
+};
 
 const StyledToolbar = withStyles({
-  root: {
-    justifyContent: 'space-between',
-    minHeight: 0
-  }
+    root: {
+        justifyContent: 'space-between',
+        minHeight: 0,
+    },
 })(Toolbar);
 
 export default CustomAppBar;

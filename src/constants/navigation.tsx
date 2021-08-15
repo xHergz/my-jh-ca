@@ -44,15 +44,15 @@ export type NavigationItem = {
     type: NavigationType;
 }
 
-export type NavigationLink = NavigationItem & {
+export type NavigationLinkItem = NavigationItem & {
     link: string;
 }
 
-export type NavigationGroup = NavigationItem & {
-    children: NavigationLink[]
+export type NavigationGroupItem = NavigationItem & {
+    children: NavigationLinkItem[]
 }
 
-const NAVIGATION_TREE: (NavigationLink | NavigationGroup)[] = [
+const NAVIGATION_TREE: (NavigationLinkItem | NavigationGroupItem)[] = [
     {
         id: 'home',
         icon: <HomeIcon />,
