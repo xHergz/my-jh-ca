@@ -28,7 +28,17 @@ const NavDrawer: React.FunctionComponent<NavDrawerProps> = (props: NavDrawerProp
                                     key={navItem.id}
                                     navLink={navItem as NavigationLink}
                                 />
-                            )
+                            );
+                        } else if (navItem.id === 'more') {
+                            const more = navItem as NavigationGroup;
+                            return more.children.map(child => {
+                                return (
+                                    <NavDrawerLink
+                                        key={child.id}
+                                        navLink={child}
+                                    />
+                                );
+                            });
                         }
 
                         const group = navItem as NavigationGroup;
