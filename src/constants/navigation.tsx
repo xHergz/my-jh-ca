@@ -9,6 +9,7 @@ import ToolsIcon from '@material-ui/icons/Gavel';
 import HomeIcon from '@material-ui/icons/Home';
 import GroceriesIcon from '@material-ui/icons/Kitchen';
 import BudgetIcon from '@material-ui/icons/LocalAtm';
+import ApiKeysIcon from '@material-ui/icons/Lock';
 import RecipesIcon from '@material-ui/icons/MenuBook';
 import MenuIcon from '@material-ui/icons/Menu';
 import SettingsIcon from '@material-ui/icons/Settings';
@@ -16,8 +17,9 @@ import CalendarIcon from '@material-ui/icons/Today';
 import WeatherIcon from '@material-ui/icons/WbSunny';
 
 export type NavigationLinkId =
+    // Stand Alone
     | 'home'
-    | 'logout'
+    // Apps
     | 'budget'
     | 'calendar'
     | 'contacts'
@@ -26,7 +28,12 @@ export type NavigationLinkId =
     | 'notes'
     | 'recipes'
     | 'tasks'
-    | 'weather';
+    | 'weather'
+    // Tools
+    // Settings
+    | 'api-keys'
+    // More
+    | 'logout';
 
 export type NavigationGroupId = 'apps' | 'tools' | 'settings' | 'more';
 
@@ -37,20 +44,20 @@ type NavigationType = 'link' | 'group';
 type NavigationContext = 'desktop' | 'mobile';
 
 export type NavigationItem = {
-    id: NavigationId,
+    id: NavigationId;
     icon: JSX.Element;
     text: string;
     contexts: NavigationContext[];
     type: NavigationType;
-}
+};
 
 export type NavigationLinkItem = NavigationItem & {
     link: string;
-}
+};
 
 export type NavigationGroupItem = NavigationItem & {
-    children: NavigationLinkItem[]
-}
+    children: NavigationLinkItem[];
+};
 
 const NAVIGATION_TREE: (NavigationLinkItem | NavigationGroupItem)[] = [
     {
@@ -74,7 +81,7 @@ const NAVIGATION_TREE: (NavigationLinkItem | NavigationGroupItem)[] = [
                 text: 'Budget',
                 contexts: ['desktop', 'mobile'],
                 type: 'link',
-                link: '/budget'
+                link: '/budget',
             },
             {
                 id: 'calendar',
@@ -139,8 +146,8 @@ const NAVIGATION_TREE: (NavigationLinkItem | NavigationGroupItem)[] = [
                 contexts: ['desktop', 'mobile'],
                 type: 'link',
                 link: '/weather',
-            }
-        ]
+            },
+        ],
     },
     {
         id: 'tools',
@@ -148,7 +155,7 @@ const NAVIGATION_TREE: (NavigationLinkItem | NavigationGroupItem)[] = [
         text: 'Tools',
         contexts: ['desktop', 'mobile'],
         type: 'group',
-        children: []
+        children: [],
     },
     {
         id: 'settings',
@@ -156,7 +163,16 @@ const NAVIGATION_TREE: (NavigationLinkItem | NavigationGroupItem)[] = [
         text: 'Settings',
         contexts: ['desktop', 'mobile'],
         type: 'group',
-        children: []
+        children: [
+            {
+                id: 'api-keys',
+                icon: <ApiKeysIcon />,
+                text: 'API Keys',
+                contexts: ['desktop', 'mobile'],
+                type: 'link',
+                link: '/settings/api-keys',
+            },
+        ],
     },
     {
         id: 'more',
@@ -171,14 +187,16 @@ const NAVIGATION_TREE: (NavigationLinkItem | NavigationGroupItem)[] = [
                 text: 'Log Out',
                 contexts: ['desktop', 'mobile'],
                 type: 'link',
-                link: '/logout'
+                link: '/logout',
             },
-        ]
+        ],
     },
 ];
 
-export const MOBILE_NAVIGATION = NAVIGATION_TREE.filter(navItem => navItem.contexts.includes('mobile'));
+export const ROOT_URL = (NAVIGATION_TREE[0] as NavigationLinkItem).link;
 
-export const DESKTOP_NAVIGATION = NAVIGATION_TREE.filter(navItem => navItem.contexts.includes('desktop'));
+export const MOBILE_NAVIGATION = NAVIGATION_TREE.filter((navItem) => navItem.contexts.includes('mobile'));
+
+export const DESKTOP_NAVIGATION = NAVIGATION_TREE.filter((navItem) => navItem.contexts.includes('desktop'));
 
 export default NAVIGATION_TREE;

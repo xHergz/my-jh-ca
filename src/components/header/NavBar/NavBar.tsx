@@ -5,12 +5,14 @@ import { withStyles } from '@material-ui/styles';
 
 import {
     DESKTOP_NAVIGATION,
+    ROOT_URL,
     NavigationGroupId,
     NavigationGroupItem,
     NavigationLinkItem,
 } from '../../../constants/navigation';
 import { NavigationGroup, NavigationLink } from '../Navigation';
 import NavBarGroup from './NavBarGroup';
+import { UnformattedLink } from '../../text';
 
 export type NavBarProps = React.HTMLAttributes<HTMLDivElement> & {};
 
@@ -19,7 +21,9 @@ const NavBar: React.FunctionComponent<NavBarProps> = (props: NavBarProps): JSX.E
     return (
         <AppBar position='static' className={props.className}>
             <StyledToolbar>
-                <Typography variant='h6'>my-jh-ca</Typography>
+                <UnformattedLink href={ROOT_URL}>
+                    <Typography variant='h6'>my-jh-ca</Typography>
+                </UnformattedLink>
                 <StyledList>
                     {DESKTOP_NAVIGATION.map((navItem) => {
                         if (navItem.id === 'home') {
@@ -75,16 +79,5 @@ const StyledList = withStyles((theme: Theme) => ({
 }))((props: ListProps): JSX.Element => {
     return <List component='nav' {...props} />;
 });
-
-const StyledNavigationGroup = withStyles({
-    root: {
-        '&:hover': {
-            backgroundColor: 'rgba(255, 255, 255, 0.1)',
-        },
-    },
-    icon: {
-        color: '#FFF',
-    },
-})(NavigationGroup);
 
 export default NavBar;
