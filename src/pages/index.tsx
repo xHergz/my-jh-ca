@@ -1,9 +1,11 @@
 import React from 'react';
 import { Theme } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
-import AppBar from './components/header/AppBar';
-import NavBar from './components/header/NavBar';
-import NavDrawer from './components/header/NavDrawer';
+import type { NextPage } from 'next';
+import Head from 'next/head';
+
+import AppBar from '../components/header/AppBar';
+import NavBar from '../components/header/NavBar';
 
 const useStyles = makeStyles<Theme>((theme) => ({
     appContainer: {
@@ -11,17 +13,17 @@ const useStyles = makeStyles<Theme>((theme) => ({
         display: 'grid',
         gridTemplateRows: '60px 1fr 60px',
         gridTemplateAreas: `
-            "navBar"
-            "content"
-            "appBar"
-        `,
+          "navBar"
+          "content"
+          "appBar"
+      `,
         [theme.breakpoints.up('md')]: {
             gridTemplateRows: '60px 1fr 0px',
             gridTemplateAreas: `
-                "navBar"
-                "content"
-                "appBar"
-            `,
+              "navBar"
+              "content"
+              "appBar"
+          `,
         },
     },
     navBar: {
@@ -41,17 +43,23 @@ const useStyles = makeStyles<Theme>((theme) => ({
     },
 }));
 
-function App() {
+const Home: NextPage = () => {
     const styles = useStyles();
     return (
         <>
-            <div className={styles.appContainer}>
+            <Head>
+                <title>my-jh-ca</title>
+                <meta name='description' content='command center' />
+                <link rel='icon' href='/favicon.ico' />
+            </Head>
+            <main className={styles.appContainer}>
                 <NavBar className={styles.navBar} />
                 <div className={styles.content} />
                 <AppBar className={styles.appBar} />
-            </div>
+            </main>
+            <footer></footer>
         </>
     );
-}
+};
 
-export default App;
+export default Home;

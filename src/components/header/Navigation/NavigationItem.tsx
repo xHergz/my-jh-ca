@@ -14,7 +14,7 @@ export type NavigationItemProps = React.PropsWithChildren<{
     ref?: React.ForwardedRef<HTMLDivElement>;
 }>;
 
-const NavigationItem: React.FunctionComponent<NavigationItemProps> = React.forwardRef<
+const NavigationItemComponent: React.FunctionComponent<NavigationItemProps> = React.forwardRef<
     HTMLDivElement,
     NavigationItemProps
 >((props, ref): JSX.Element => {
@@ -26,6 +26,7 @@ const NavigationItem: React.FunctionComponent<NavigationItemProps> = React.forwa
         </ListItem>
     );
 });
+NavigationItemComponent.displayName = 'NavigationItem';
 
 const StyledListItemIcon = withStyles({
     root: {
@@ -34,4 +35,4 @@ const StyledListItemIcon = withStyles({
     },
 })(ListItemIcon);
 
-export default NavigationItem;
+export default NavigationItemComponent;

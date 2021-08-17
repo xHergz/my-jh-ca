@@ -31,5 +31,6 @@ const NavigationGroup: React.FunctionComponent<NavigationGroupProps> = React.for
         </>
     );
 });
+NavigationGroup.displayName = 'NavigationGroup';
 
 export default NavigationGroup;
