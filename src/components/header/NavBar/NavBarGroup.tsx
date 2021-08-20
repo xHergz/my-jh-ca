@@ -1,5 +1,5 @@
 import React, { ForwardedRef, useRef } from 'react';
-import { Menu, MenuProps } from '@material-ui/core';
+import { Menu, MenuProps, Theme } from '@material-ui/core';
 import { withStyles } from '@material-ui/styles';
 
 import { NavigationGroup, NavigationGroupProps } from '../Navigation';
@@ -31,7 +31,7 @@ const NavBarGroup: React.FunctionComponent<NavBarGroupProps> = (props: NavBarGro
                     anchorEl={groupRef.current}
                 >
                     {props.navGroup.children.map((child) => {
-                        return <StyledNavigationLink navLink={child} />;
+                        return <StyledNavigationLink key={child.id} navLink={child} />;
                     })}
                 </StyledMenu>
             }
@@ -58,12 +58,18 @@ const StyledNavigationLink = withStyles({
     },
 })(NavigationLink);
 
-const StyledMenu = withStyles({
+const StyledMenu = withStyles((theme) => ({
+    root: {
+        display: 'none',
+        [theme.breakpoints.up('md')]: {
+            display: 'block',
+        },
+    },
     paper: {
         marginTop: '6px',
         border: '1px solid #d3d4d5',
     },
-})((props: MenuProps) => (
+}))((props: MenuProps) => (
     <Menu
         elevation={0}
         anchorOrigin={{

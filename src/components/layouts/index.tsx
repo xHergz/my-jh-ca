@@ -1,3 +1,3 @@
-import CoreLayout from './core';
+import CoreLayout from './CoreLayout';
 
 export { CoreLayout };

@@ -22,7 +22,12 @@ export type NavDrawerProps = {
 
 const NavDrawer: React.FunctionComponent<NavDrawerProps> = (props: NavDrawerProps): JSX.Element => {
     return (
-        <StyledDrawer open={props.open} onClose={props.onClose} onOpen={props.onOpen}>
+        <StyledDrawer
+            open={props.open}
+            onClose={props.onClose}
+            onOpen={props.onOpen}
+            SwipeAreaProps={{ classes: { root: { maxHeight: '100vh' } } }}
+        >
             <CloseButton onClick={props.onClose} />
             <List component='nav'>
                 {MOBILE_NAVIGATION.map((navItem) => {
@@ -54,6 +59,7 @@ export const StyledDrawer = withStyles({
     paper: {
         padding: '8px',
         width: '75vw',
+        maxHeight: '100vh',
     },
 })(SwipeableDrawer);
 
