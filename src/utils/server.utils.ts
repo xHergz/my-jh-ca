@@ -11,8 +11,9 @@ export class SupabaseDataClient {
   constructor(type: SupabaseClientType) {
     switch (type) {
       case "server":
+        const cookieStore = cookies();
         this._client = createServerComponentClient<Database>({
-          cookies,
+          cookies: () => cookieStore,
         });
         break;
       case "super":
