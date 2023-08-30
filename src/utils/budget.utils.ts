@@ -1,6 +1,16 @@
 import { SupabaseDataClient } from "./server.utils";
 import { getTransactions } from "./transaction.utils";
 
+export const getBudgets = async (supabase: SupabaseDataClient) => {
+  const { data: budgets, error } = await supabase.client
+    .from("Budget")
+    .select("Budget_Id, Name, Budget_Entry(*, Subcategory(*))");
+
+  if (error) throw error;
+
+  return budgets;
+};
+
 export const getBudgetSummary = async (
   supabase: SupabaseDataClient,
   startDate: Date,
