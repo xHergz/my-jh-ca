@@ -41,6 +41,17 @@ const TransactionForm: React.FunctionComponent<TransactionFormProps> = ({
   const [error, setError] = useState<string>("");
   const [saveInProgress, setSaveInProgress] = useState<boolean>(false);
 
+  const onCategoryChange = (newCategoryId: string) => {
+    setCategory(newCategoryId);
+    setSubcategory(
+      subcategories
+        .filter((sub) => sub.Category_Id.toString() === newCategoryId)
+        .map((sub) => sub.Subcategory_Id.toString())[0]
+    );
+  };
+
+  console.log(category, subcategory);
+
   const submitTransaction = async () => {
     if (!user) {
       return;
@@ -55,6 +66,7 @@ const TransactionForm: React.FunctionComponent<TransactionFormProps> = ({
       Credit_Amount: creditAmount !== "" ? parseFloat(creditAmount) : null,
       Description: description,
       User_Id: user.id,
+      Organization_Id: "0bdb2902-cc2d-4921-85b7-cab68e0fcac3",
     });
 
     if (error) {
@@ -73,7 +85,7 @@ const TransactionForm: React.FunctionComponent<TransactionFormProps> = ({
     <div className="flex flex-col gap-2">
       <form className="flex flex-col gap-4">
         <label>Category:</label>
-        <Select onChange={setCategory}>
+        <Select onChange={onCategoryChange}>
           {categories.map((category) => (
             <SelectOption
               key={category.Category_Id.toString()}
