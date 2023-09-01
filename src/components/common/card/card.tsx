@@ -12,7 +12,7 @@ export type CardProps = HTMLAttributes<HTMLDivElement> & {
 const Card: React.FC<CardProps> = (props: CardProps): JSX.Element => {
   const { className, children, description, title } = props;
   const divClasses = clsx({
-    ["block rounded-lg bg-white p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] max-w-lg dark:bg-gray-500"]:
+    ["block rounded-lg bg-white p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] max-w-lg dark:bg-gray-700"]:
       true,
   });
 
