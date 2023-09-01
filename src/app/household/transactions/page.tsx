@@ -15,7 +15,7 @@ import {
 } from "@/components/shadcn/table";
 import Image from "next/image";
 
-export const JUSTINS_ID = "fec8d3fb-48e3-4a23-be7b-d0a3751fb312";
+const JUSTINS_ID = "fec8d3fb-48e3-4a23-be7b-d0a3751fb312";
 
 export default async function Transactions() {
   const supabase = useServerClient();
