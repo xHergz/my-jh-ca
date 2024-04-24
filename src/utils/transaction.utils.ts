@@ -8,6 +8,7 @@ export const getRecentTransactions = async (supabase: SupabaseDataClient) => {
     .select(
       "Transaction_Id, Subcategory(Description, Category(Description)), Location, Debit_Amount, Credit_Amount, Transaction_Date, Entry_Date, Description"
     )
+    .order("Entry_Date", { ascending: false })
     .order("Transaction_Date", { ascending: false })
     .limit(10);
 
