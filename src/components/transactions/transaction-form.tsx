@@ -1,7 +1,7 @@
 "use client";
 
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 
 import Button from "@/components/common/button";
 import Input from "@/components/common/input";
@@ -40,6 +40,21 @@ const TransactionForm: React.FunctionComponent<TransactionFormProps> = ({
   const [description, setDescription] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [saveInProgress, setSaveInProgress] = useState<boolean>(false);
+  const locationRef = useRef<HTMLInputElement>(null);
+  const debitRef = useRef<HTMLInputElement>(null);
+  const creditRef = useRef<HTMLInputElement>(null);
+  const descriptionRef = useRef<HTMLInputElement>(null);
+
+  const clearForm = () => {
+    locationRef.current!.value = "";
+    debitRef.current!.value = "";
+    creditRef.current!.value = "";
+    descriptionRef.current!.value = "";
+    setLocation("");
+    setDebitAmount("");
+    setCreditAmount("");
+    setDescription("");
+  };
 
   const onCategoryChange = (newCategoryId: string) => {
     setCategory(newCategoryId);
@@ -50,9 +65,11 @@ const TransactionForm: React.FunctionComponent<TransactionFormProps> = ({
     );
   };
 
-  console.log(category, subcategory);
+  const submitTransaction = async (event: FormEvent<HTMLFormElement>) => {
+    // Stop the page from reloading on form submit
+    event.preventDefault();
+    event.stopPropagation();
 
-  const submitTransaction = async () => {
     if (!user) {
       return;
     }
@@ -70,12 +87,14 @@ const TransactionForm: React.FunctionComponent<TransactionFormProps> = ({
     });
 
     if (error) {
+      setError(error.message);
       console.error(error);
-      //setError(error);
       setTimeout(() => {
         setError("");
       }, 3000);
     } else {
+      clearForm();
+      locationRef.current?.focus();
       router.refresh();
     }
     setSaveInProgress(false);
@@ -83,7 +102,7 @@ const TransactionForm: React.FunctionComponent<TransactionFormProps> = ({
 
   return (
     <div className="flex flex-col gap-2">
-      <form className="flex flex-col gap-4">
+      <form className="flex flex-col gap-4" onSubmit={submitTransaction}>
         <label>Category:</label>
         <Select onChange={onCategoryChange}>
           {categories.map((category) => (
@@ -109,19 +128,19 @@ const TransactionForm: React.FunctionComponent<TransactionFormProps> = ({
             ))}
         </Select>
         <label>Location:</label>
-        <Input onChange={setLocation} />
+        <Input onChange={setLocation} ref={locationRef} />
         <label>Debit Amount:</label>
-        <Input onChange={setDebitAmount} />
+        <Input onChange={setDebitAmount} ref={debitRef} />
         <label>Credit Amount:</label>
-        <Input onChange={setCreditAmount} />
+        <Input onChange={setCreditAmount} ref={creditRef} />
         <label>Transaction Date:</label>
         <Input onChange={setTransactionDate} type="date" />
         <label>Description:</label>
-        <Input onChange={setDescription} />
+        <Input onChange={setDescription} ref={descriptionRef} />
+        <Button type="submit" disabled={saveInProgress}>
+          Submit
+        </Button>
       </form>
-      <Button onClick={submitTransaction} disabled={saveInProgress}>
-        Submit
-      </Button>
       <Text variant="p" color="error">
         {error}
       </Text>
